@@ -1,0 +1,42 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb+srv://todza9990:mogoserver@mydb.00ul8ge.mongodb.net/?retryWrites=true&w=majority&appName=MyDB
+      - POSTGRES_URL=postgres://postgres.cnrmenziewvzydowsmup:Postgres@server@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+    depends_on:
+      - mongo
+      - postgres
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mongo_data:
+  postgres_data:
+
+
+
+# mongodb+srv://todza9990:mogoserver@mydb.00ul8ge.mongodb.net/?retryWrites=true&w=majority&appName=MyDB
+
